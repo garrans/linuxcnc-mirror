@@ -56,20 +56,20 @@ h.setprefix("scorbot-er-3")
 
 # create pins, initialize robot
 old_motor_pos_cmd = [None] * 8
-old_input_scale = [None] * 8
+old_scale = [None] * 8
 old_counts = [None] * 8
 old_motor_max_vel = [None] * 8
 for joint in range(0, 8):
     h.newpin('joint%d.limit-sw' % joint, hal.HAL_BIT, hal.HAL_OUT)
     h.newpin('joint%d.motor-pos-cmd' % joint, hal.HAL_FLOAT, hal.HAL_IN)
-    h.newpin('joint%d.input-scale' % joint, hal.HAL_FLOAT, hal.HAL_IN)
+    h.newpin('joint%d.scale' % joint, hal.HAL_FLOAT, hal.HAL_IN)
     h.newpin('joint%d.motor-max-vel' % joint, hal.HAL_S32, hal.HAL_IN)
 
     h['joint%d.motor-pos-cmd' % joint] = 0.0
     old_motor_pos_cmd[joint] = 0.0
 
-    h['joint%d.input-scale' % joint] = 1000.0
-    old_input_scale[joint] = 1000.0
+    h['joint%d.scale' % joint] = 1000.0
+    old_scale[joint] = 1000.0
 
     old_counts[joint] = 0
 
@@ -85,19 +85,19 @@ h.ready()
 while True:
     #print "top of main loop"
     for joint in range(0, 8):
-        if (h['joint%d.motor-pos-cmd' % joint] != old_motor_pos_cmd[joint]) or h['joint%d.input-scale' % joint] != old_input_scale[joint]:
+        if (h['joint%d.motor-pos-cmd' % joint] != old_motor_pos_cmd[joint]) or h['joint%d.scale' % joint] != old_scale[joint]:
             # the scorbot-er-3 servos are commanded in delta encoder counts
             # this component/driver gets input in the form of position (angular) and scale
             # position = counts / scale
             # counts = position * scale
-            new_counts = h['joint%d.motor-pos-cmd' % joint] * h['joint%d.input-scale' % joint]
+            new_counts = h['joint%d.motor-pos-cmd' % joint] * h['joint%d.scale' % joint]
             delta = new_counts - old_counts[joint]
 
             #print "joint %d moved from %.3f (%d) to %.3f (%d), commanding move of %d" % (joint, old_motor_pos_cmd[joint], old_counts[joint], h['joint%d.motor-pos-cmd' % joint], new_counts, delta)
 
             serial_write('%dm%d\n\r' % (joint+1, delta))
             old_motor_pos_cmd[joint] = h['joint%d.motor-pos-cmd' % joint]
-            old_input_scale[joint] = h['joint%d.input-scale' % joint]
+            old_scale[joint] = h['joint%d.scale' % joint]
             old_counts[joint] = new_counts
 
         if h['joint%d.motor-max-vel' % joint] != old_motor_max_vel[joint]:

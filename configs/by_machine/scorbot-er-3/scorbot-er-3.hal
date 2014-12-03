@@ -48,6 +48,8 @@ net j0.limit => axis.0.home-sw-in
 net j0.limit => axis.0.neg-lim-sw-in
 net j0.limit => axis.0.pos-lim-sw-in
 
+setp scorbot-er-3.joint0.scale [AXIS_0]SCALE
+
 #setp  hm2_[HOSTMOT2](BOARD).0.encoder.01.scale  [AXIS_1]INPUT_SCALE
 #net motor.01.pos-fb hm2_[HOSTMOT2](BOARD).0.encoder.01.position => pid.1.feedback
 #net motor.01.pos-fb => axis.1.motor-pos-fb #push copy back to Axis GUI
@@ -101,6 +103,8 @@ net j1.limit => axis.1.home-sw-in
 net j1.limit => axis.1.neg-lim-sw-in
 net j1.limit => axis.1.pos-lim-sw-in
 
+setp scorbot-er-3.joint1.scale [AXIS_1]SCALE
+
 
 #
 # Joint 2
@@ -114,6 +118,8 @@ net j2.limit <= scorbot-er-3.joint2.limit-sw
 net j2.limit => axis.2.home-sw-in
 net j2.limit => axis.2.neg-lim-sw-in
 net j2.limit => axis.2.pos-lim-sw-in
+
+setp scorbot-er-3.joint2.scale [AXIS_2]SCALE
 
 
 #
@@ -129,6 +135,8 @@ net j3.limit => axis.3.home-sw-in
 net j3.limit => axis.3.neg-lim-sw-in
 net j3.limit => axis.3.pos-lim-sw-in
 
+setp scorbot-er-3.joint3.scale [AXIS_3]SCALE
+
 
 #
 # Joint 4
@@ -142,6 +150,8 @@ net j4.limit <= scorbot-er-3.joint4.limit-sw
 net j4.limit => axis.4.home-sw-in
 net j4.limit => axis.4.neg-lim-sw-in
 net j4.limit => axis.4.pos-lim-sw-in
+
+setp scorbot-er-3.joint4.scale [AXIS_4]SCALE
 
 
 #
@@ -157,6 +167,8 @@ net j5.limit => axis.5.home-sw-in
 net j5.limit => axis.5.neg-lim-sw-in
 net j5.limit => axis.5.pos-lim-sw-in
 
+setp scorbot-er-3.joint5.scale [AXIS_5]SCALE
+
 
 #
 # Joint 6
@@ -171,6 +183,8 @@ net j6.limit => axis.6.home-sw-in
 net j6.limit => axis.6.neg-lim-sw-in
 net j6.limit => axis.6.pos-lim-sw-in
 
+setp scorbot-er-3.joint6.scale [AXIS_6]SCALE
+
 
 #
 # Joint 7
@@ -184,3 +198,5 @@ net j7.limit <= scorbot-er-3.joint7.limit-sw
 net j7.limit => axis.7.home-sw-in
 net j7.limit => axis.7.neg-lim-sw-in
 net j7.limit => axis.7.pos-lim-sw-in
+
+setp scorbot-er-3.joint7.scale [AXIS_7]SCALE
