@@ -85,15 +85,15 @@ h.ready()
 while True:
     #print "top of main loop"
     for joint in range(0, 8):
-        if (h['joint%d.motor-pos-cmd' % joint] != old_motor_pos_cmd[joint]) or h['joint%d.scale' % joint] != old_scale[joint]:
-            # the scorbot-er-3 servos are commanded in delta encoder counts
-            # this component/driver gets input in the form of position (angular) and scale
-            # position = counts / scale
-            # counts = position * scale
-            new_counts = h['joint%d.motor-pos-cmd' % joint] * h['joint%d.scale' % joint]
+        # the scorbot-er-3 servos are commanded in delta encoder counts
+        # this component/driver gets input in the form of position (angular) and scale
+        # position = counts / scale
+        # counts = position * scale
+        new_counts = int(h['joint%d.motor-pos-cmd' % joint] * h['joint%d.scale' % joint])
+        if new_counts != old_counts[joint]:
             delta = new_counts - old_counts[joint]
 
-            #print "joint %d moved from %.3f (%d) to %.3f (%d), commanding move of %d" % (joint, old_motor_pos_cmd[joint], old_counts[joint], h['joint%d.motor-pos-cmd' % joint], new_counts, delta)
+            #print "joint %d moved from %.6f (%d) to %.6f (%d), commanding move of %d" % (joint, old_motor_pos_cmd[joint], old_counts[joint], h['joint%d.motor-pos-cmd' % joint], new_counts, delta)
 
             serial_write('%dm%d\n\r' % (joint+1, delta))
             old_motor_pos_cmd[joint] = h['joint%d.motor-pos-cmd' % joint]
