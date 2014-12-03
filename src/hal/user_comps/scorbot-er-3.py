@@ -105,5 +105,5 @@ while True:
         if l != None:
             h['joint%d.limit-sw' % joint] = bool(int(l))
 
-    time.sleep(0.1)
+    time.sleep(0.001)
 
