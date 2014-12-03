@@ -23,7 +23,15 @@ def serial_write(data):
     serial.write(data)
 
 def serial_read(num_bytes):
+    if not hasattr(serial_read, "warned"):
+        serial_read.warned = False
     data = serial.read(num_bytes)
+    if len(data) != num_bytes:
+        serial_read.warned = True
+        print "*** Error reading Scorbot-ER III serial port"
+        print "*** Is the cable plugged in and the control box powered on?"
+    else:
+        serial_read.warned = False
     return data
 
 
